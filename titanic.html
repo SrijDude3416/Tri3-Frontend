@@ -28,8 +28,8 @@ search_exclude: true
     <div>
         <label for="gender">Gender:</label>
         <select id="gender">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            <option value="1">Male</option>
+            <option value="0">Female</option>
         </select>
     </div>
     <div>
@@ -51,23 +51,23 @@ search_exclude: true
 
     <script>
         function predictSurvival() {
-            const passengerClass = document.getElementById('passenger-class').value;
-            const age = document.getElementById('age').value;
-            const gender = document.getElementById('gender').value;
-            const sibsp = document.getElementById('sibsp').value;
-            const parch = document.getElementById('parch').value;
-            const fare = document.getElementById('fare').value;
+            const Pclass = document.getElementById('passenger-class').value;
+            const Age = document.getElementById('age').value;
+            const Sex = document.getElementById('gender').value;
+            const SibSp = document.getElementById('sibsp').value;
+            const Parch = document.getElementById('parch').value;
+            const Fare = document.getElementById('fare').value;
 
             const data = {
-                passengerClass,
-                gender,
-                age,
-                sibsp,
-                parch,
-                fare
+                Pclass,
+                Sex,
+                Age,
+                SibSp,
+                Parch,
+                Fare
             };
 
-            fetch('http://127.0.0.1:8086/predict', {
+            fetch('http://127.0.0.1:8086/api/titanic/predict', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -76,7 +76,7 @@ search_exclude: true
             })
             .then(response => response.json())
             .then(prediction => {
-                document.getElementById('prediction').innerText = `Survival Prediction: ${prediction}`;
+                document.getElementById('prediction').innerText = `Survival Prediction: ${prediction.message*100}%`;
             })
             .catch(error => {
                 console.error('Error:', error);
