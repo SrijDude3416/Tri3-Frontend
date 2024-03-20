@@ -4,20 +4,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Trimester 3 | August 2023 to June 2024</title>
+<title>Stroke Prediction | Trimester 3</title>
 <meta name="generator" content="Jekyll v3.9.3" />
-<meta property="og:title" content="Trimester 3" />
+<meta property="og:title" content="Stroke Prediction" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="August 2023 to June 2024" />
 <meta property="og:description" content="August 2023 to June 2024" />
-<link rel="canonical" href="http://localhost:4100/Tri3/about/" />
-<meta property="og:url" content="http://localhost:4100/Tri3/about/" />
+<link rel="canonical" href="http://localhost:4100/Tri3/stroke/" />
+<meta property="og:url" content="http://localhost:4100/Tri3/stroke/" />
 <meta property="og:site_name" content="Trimester 3" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Trimester 3" />
+<meta property="twitter:title" content="Stroke Prediction" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","description":"August 2023 to June 2024","headline":"Trimester 3","name":"Trimester 3","url":"http://localhost:4100/Tri3/about/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"August 2023 to June 2024","headline":"Stroke Prediction","url":"http://localhost:4100/Tri3/stroke/"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Tri3/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4100/Tri3/feed.xml" title="Trimester 3" /><link rel="shortcut icon" type="image/x-icon" href="/Tri3/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -69,19 +69,91 @@ window.onload = wrap_img;
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <article class="post">
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stroke Prediction</title>
+        </head>
+        <body>
+            <h1>Stroke Prediction</h1>
+            <label for="gender">Gender:</label>
+        <select id="gender">
+            <option value="1">Male</option>
+            <option value="0">Female</option>
+        </select>
 
-  <header class="post-header">
-    <h1 class="post-title"></h1>
-  </header>
+        <label for="age">Age:</label>
+        <input type="number" id="age">
 
-  <div class="post-content">
-    <p>Testing</p>
+        <label for="hypertension">Hypertension:</label>
+        <select id="hypertension">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select>
 
+        <label for="heart_disease">Heart Disease:</label>
+        <select id="heart_disease">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select>
 
-  </div>
+        <label for="ever_married">Ever Married:</label>
+        <select id="ever_married">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select>
 
-</article>
+        <label for="avg_glucose_level">Average Glucose Level:</label>
+        <input type="number" id="avg_glucose_level">
+
+        <label for="bmi">BMI:</label>
+        <input type="number" id="bmi">
+
+    <div>
+        <button onclick="predictSurvival()">Predict Survival</button>
+    </div>
+    <div id="prediction"></div>
+
+    <script>
+        function predictSurvival() {
+            const gender = document.getElementById('gender').value;
+            const age = document.getElementById('age').value;
+            const hypertension = document.getElementById('hypertension').value;
+            const heart_disease = document.getElementById('heart_disease').value;
+            const ever_married = document.getElementById('ever_married').value;
+            const avg_glucose_level = document.getElementById('avg_glucose_level').value;
+            const bmi = document.getElementById('bmi').value;
+
+            const data = {
+                gender,
+                age,
+                hypertension,
+                heart_disease,
+                ever_married,
+                avg_glucose_level,
+                bmi
+            };
+
+            fetch('http://127.0.0.1:8086/api/stroke/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(prediction => {
+                document.getElementById('prediction').innerText = `Stroke Probability: ${prediction.message*100}%`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
 
       </div>
     </main><footer class="site-footer h-card">
